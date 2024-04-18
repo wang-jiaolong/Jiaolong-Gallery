@@ -1263,19 +1263,19 @@
 
 		@media screen and (max-width: 736px) {
 
-			.poptrox-popup:before {
+			/* .poptrox-popup:before {
 				display: none;
-			}
+			} */
 
 			.poptrox-popup .caption {
 				font-size: x-small;
 			}
 
-			.poptrox-popup .closer,
+			/* .poptrox-popup .closer,
 			.poptrox-popup .nav-previous,
 			.poptrox-popup .nav-next {
 				display: none !important;
-			}
+			} */
 
 		}
 
