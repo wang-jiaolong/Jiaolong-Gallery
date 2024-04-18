@@ -6,11 +6,11 @@ image_thumbs_loc: "/images/thumbs"
 # google_analytics: "UA-46465113-2"
 
 # UI configs
-title: "Shot by Jiaolong"
+title: "Photography by Jiaolong"
 subtitle: "See the world through my eyes!"
 author: "Jiaolong"
 header:
- title: "Photography"
+ title: "Shot"
  subtitle: "by Jiaolong"
 footer:
  name: "Hey there, my name is Jiaolong"
