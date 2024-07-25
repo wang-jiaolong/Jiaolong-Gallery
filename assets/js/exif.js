@@ -711,7 +711,12 @@
                     case "FlashpixVersion" :
                         exifData[tag] = String.fromCharCode(exifData[tag][0], exifData[tag][1], exifData[tag][2], exifData[tag][3]);
                         break;
-
+                    case "FocalLength":
+                        exifData[tag] = exifData[tag] + "mm";
+                        break;
+                    case "FNumber":
+                        exifData[tag] = "F/" + exifData[tag];
+                        break;
                     case "ComponentsConfiguration" :
                         exifData[tag] =
                             StringValues.Components[exifData[tag][0]] +
