@@ -7,9 +7,8 @@ layout: default
 
     <!-- Header -->
     <header id="header">
-        {% assign fulls_files = site.static_files | where: "path", "fulls" %}
-        {% assign fulls_count = fulls_files | size %}
-        <h1><a href="index.html">「 <span class="icon fa-image"></span> x{{ fulls_count }} 」{{ site.header.title }} <strong> {{ site.header.subtitle }} </strong></a></h1>
+        {% assign total_static_files = site.static_files | size %}
+        <h1><a href="index.html">「 <span class="icon fa-image"></span> x{{ (total_static_files - 43) / 2 }} 」{{ site.header.title }} <strong> {{ site.header.subtitle }} </strong></a></h1>
         <nav>
             <ul>
                 <!-- <li><a href="#footer" class="icon fa-info-circle">About</a></li> -->
