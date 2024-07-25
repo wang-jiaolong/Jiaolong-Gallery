@@ -19,7 +19,7 @@ footer:
 # web_design: "AJ"
 # Configure which exif data to display
 # Tag is the actual exif tag, icon is a fontawesome icon. Use JSON notation without line breaks
-exif: '[{"tag": "Model", "icon": "camera-retro"},{"tag": "FocalLength", "icon": "info-circle-o"} ,{"tag": "FNumber", "icon": "atom"}, {"tag": "ExposureTime", "icon": "clock-o"}, {"tag": "ISOSpeedRatings", "icon": "sun-o"}]'
+exif: '[{"tag": "Model", "icon": "camera-retro"},{"tag": "FocalLength", "icon": "eye"} ,{"tag": "FNumber", "icon": "dot-circle-o"}, {"tag": "ExposureTime", "icon": "clock-o"}, {"tag": "ISOSpeedRatings", "icon": "sun-o"}]'
 # social_urls:
 #   twitter: "https://www.twitter.com/ram__patra"
 #   instagram: "https://www.instagram.com/ram_patra"
