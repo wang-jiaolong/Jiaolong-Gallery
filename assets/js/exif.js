@@ -720,6 +720,9 @@
                     case "ISOSpeedRatings":
                         exifData[tag] = "ISO " + exifData[tag];
                         break;
+                    case "DateTimeOriginal":
+                        exifData[tag] = exifData[tag].replace(/(\d{4}):(\d{2}):(\d{2})/, '$1/$2/$3');
+                        break;
                     case "ComponentsConfiguration" :
                         exifData[tag] =
                             StringValues.Components[exifData[tag][0]] +
