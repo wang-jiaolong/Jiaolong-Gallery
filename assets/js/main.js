@@ -318,6 +318,7 @@
                     template += '<span><i class="fa fa-' + current_data['icon'] + '" aria-hidden="true"></i> ' + exif_data + '&nbsp;&nbsp;</span>';
                 }
             }
+            template += '<span><i class="fa fa-location-arrow" aria-hidden="true"></i> ' + img + '&nbsp;&nbsp;</span>';
             return template;
         }
 
