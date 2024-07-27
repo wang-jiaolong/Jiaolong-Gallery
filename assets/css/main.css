@@ -1209,7 +1209,7 @@
 			}
 			
 			.poptrox-popup .caption span {
-				display: block;
+				display: inline-block;
 			}
 		.poptrox-popup .loader {
 			-moz-animation: spinner 1s infinite linear !important;
