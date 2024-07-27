@@ -715,7 +715,7 @@
                         exifData[tag] = exifData[tag] + "mm";
                         break;
                     case "FNumber":
-                        exifData[tag] = "F/" + exifData[tag];
+                        exifData[tag] = "f/" + exifData[tag];
                         break;
                     case "ISOSpeedRatings":
                         exifData[tag] = "ISO " + exifData[tag];
