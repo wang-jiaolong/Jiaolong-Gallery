@@ -7,7 +7,11 @@ layout: default
 
     <!-- Header -->
     <header id="header">
-        <h1><a href="index.html"><strong>{{ site.header.title }}</strong> {{ site.header.subtitle }}</a></h1>
+        {% assign jpeg_files = site.static_files | where: "extname", ".jpeg" %}
+        {% assign total_static_files = jpeg_files | size %}
+        {% assign total_static_files = total_static_files | divided_by: 2 %}
+
+        <h1><a href="index.html">「 <span class="icon fa-image"></span> x {{ total_static_files }}」{{ site.header.title }} <strong> {{ site.header.subtitle }} </strong></a></h1>
         <nav>
             <ul>
                 <!-- <li><a href="#footer" class="icon fa-info-circle">About</a></li> -->
@@ -18,7 +22,7 @@ layout: default
 
     <!-- Main -->
     <div id="main" data-exif='{{ site.exif }}'>
-        {% for image in site.static_files %}
+        {% for image in site.static_files reversed %}
         {% if image.path contains 'fulls' %}
         <article class="thumb">
             <a href="{{ site.baseurl }}{{ site.image_fulls_loc }}/{{ image.name }}" class="image">

@@ -10,8 +10,8 @@ title: "Photography by Jiaolong"
 subtitle: "See the world through my eyes!"
 author: "Jiaolong"
 header:
- title: "Shot"
- subtitle: "by Jiaolong"
+ title: "Shot by "
+ subtitle: "Jiaolong"
 footer:
  name: "Hey there, my name is Jiaolong"
 #  bio: "I am a developer and a tech aficionado from India. Love making teeny tiny apps solving tiny problems in life and now learning photography."
@@ -19,7 +19,7 @@ footer:
 # web_design: "AJ"
 # Configure which exif data to display
 # Tag is the actual exif tag, icon is a fontawesome icon. Use JSON notation without line breaks
-exif: '[{"tag": "Model", "icon": "camera-retro"}, {"tag": "FNumber", "icon": "dot-circle-o"}, {"tag": "ExposureTime", "icon": "clock-o"}, {"tag": "ISOSpeedRatings", "icon": "info-circle"}]'
+exif: '[{"tag": "Model", "icon": "camera-retro"},{"tag": "FocalLength", "icon": "eye"} ,{"tag": "FNumber", "icon": "dot-circle-o"}, {"tag": "ExposureTime", "icon": "clock-o"}, {"tag": "ISOSpeedRatings", "icon": ""}, {"tag": "DateTimeOriginal", "icon": "calendar"}]'
 # social_urls:
 #   twitter: "https://www.twitter.com/ram__patra"
 #   instagram: "https://www.instagram.com/ram_patra"

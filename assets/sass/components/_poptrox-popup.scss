@@ -80,7 +80,7 @@
 			cursor: default;
 			left: 0;
 			position: absolute;
-			text-align: left;
+			// text-align: left;
 			width: 100%;
 			z-index: 2;
 
@@ -90,6 +90,9 @@
 
 			p {
 				color: _palette(fg-bold);
+
+				text-align: center;
+				font-family: math;
 			}
 		}
 

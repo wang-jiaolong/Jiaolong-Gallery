@@ -705,13 +705,24 @@
                         exifData[tag] = StringValues[tag][exifData[tag]];
                         break;
                     case "ExposureTime" :
-                        exifData[tag] = exifData[tag].numerator + "/" + exifData[tag].denominator;
+                        exifData[tag] = exifData[tag].numerator + "/" + exifData[tag].denominator + "s";
                         break;
                     case "ExifVersion" :
                     case "FlashpixVersion" :
                         exifData[tag] = String.fromCharCode(exifData[tag][0], exifData[tag][1], exifData[tag][2], exifData[tag][3]);
                         break;
-
+                    case "FocalLength":
+                        exifData[tag] = exifData[tag] + "mm";
+                        break;
+                    case "FNumber":
+                        exifData[tag] = "F/" + exifData[tag];
+                        break;
+                    case "ISOSpeedRatings":
+                        exifData[tag] = "ISO " + exifData[tag];
+                        break;
+                    case "DateTimeOriginal":
+                        exifData[tag] = exifData[tag].replace(/(\d{4}):(\d{2}):(\d{2})/, '$1/$2/$3');
+                        break;
                     case "ComponentsConfiguration" :
                         exifData[tag] =
                             StringValues.Components[exifData[tag][0]] +

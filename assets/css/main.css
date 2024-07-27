@@ -1191,7 +1191,7 @@
 			cursor: default;
 			left: 0;
 			position: absolute;
-			text-align: left;
+			/* text-align: left; */
 			width: 100%;
 			z-index: 2;
 		}
@@ -1202,7 +1202,12 @@
 
 			.poptrox-popup .caption p {
 				color: #ffffff;
+				font-family: math;
 			}
+			.poptrox-popup .caption p i {
+				padding-left: 3px;
+			}
+			
 
 		.poptrox-popup .loader {
 			-moz-animation: spinner 1s infinite linear !important;
