@@ -315,7 +315,7 @@
                 var current_data = exif[current];
                 var exif_data = EXIF.getTag(img, current_data['tag']);
                 if (typeof exif_data !== "undefined") {
-                    template += '<i class="fa fa-' + current_data['icon'] + '" aria-hidden="true"></i> ' + exif_data + '&nbsp;&nbsp;';
+                    template += '<div><i class="fa fa-' + current_data['icon'] + '" aria-hidden="true"></i> ' + exif_data + '&nbsp;&nbsp;</div>';
                 }
             }
             return template;
