@@ -1208,7 +1208,9 @@
 				padding-left: 3px;
 			}
 			
-
+			.poptrox-popup .caption span {
+				display: block;
+			}
 		.poptrox-popup .loader {
 			-moz-animation: spinner 1s infinite linear !important;
 			-webkit-animation: spinner 1s infinite linear !important;
