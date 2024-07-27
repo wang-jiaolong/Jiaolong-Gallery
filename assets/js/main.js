@@ -254,7 +254,7 @@
                     });
 
             // EXIF data
-            $image_img[0].addEventListener("load", function() {
+            $image_img[0].addEventListener("load", function () {
                 EXIF.getData($image_img[0], function () {
                     exifDatas[$image_img.data('name')] = getExifDataMarkup(this);
                 });
@@ -308,6 +308,47 @@
                 $main[0]._poptrox.windowMargin = 0;
             });
 
+        function removeFileExtension(filename) {
+            // 找到最后一个点的位置
+            const lastDotIndex = filename.lastIndexOf('.');
+
+            // 如果找到了点，并且点不是第一个字符
+            if (lastDotIndex > 0) {
+                // 返回不包括后缀的部分
+                return filename.substring(0, lastDotIndex);
+            } else {
+                // 如果没有找到点或者点在第一个字符，则返回原始字符串
+                return filename;
+            }
+        }
+        // 缓存 locationDic.json 数据
+        let locationDataCache = null;
+
+        function getLocationValue(key) {
+            if (!locationDataCache) {
+                const request = new XMLHttpRequest();
+                request.open('GET', '../images/locationDic.json', false); // false 表示同步请求
+                try {
+                    request.send();
+                    if (request.status === 200) {
+                        const data = JSON.parse(request.responseText);
+                        locationDataCache = data;
+                    } else {
+                        console.error('Network response was not ok', request.status);
+                    }
+                } catch (error) {
+                    console.error('There was a problem with the fetch operation:', error);
+                }
+            }
+        
+            var value = locationDataCache[removeFileExtension(key)];
+            if (value) {
+                return value.replace('-', '・');
+            } else {
+                return null;
+            }
+        }
+
         function getExifDataMarkup(img) {
             var exif = $('#main').data('exif');
             var template = '';
@@ -318,10 +359,13 @@
                     template += '<span><i class="fa fa-' + current_data['icon'] + '" aria-hidden="true"></i> ' + exif_data + '&nbsp;&nbsp;</span>';
                 }
             }
-            template += '<span><i class="fa fa-location-arrow" aria-hidden="true"></i> ' + img + '&nbsp;&nbsp;</span>';
+
+            const locationName = getLocationValue(img.dataset["name"]);
+            if (locationName) {
+                template += '<span class="location"><i class="fa fa-location-arrow" aria-hidden="true"></i> ' + locationName + '&nbsp;&nbsp;</span>';
+            }
             return template;
         }
-
     });
 
 })(jQuery);

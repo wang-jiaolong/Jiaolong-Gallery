@@ -1211,6 +1211,10 @@
 			.poptrox-popup .caption span {
 				display: inline-block;
 			}
+			.poptrox-popup .caption .location {
+				font-family: cursive;
+			}
+			
 		.poptrox-popup .loader {
 			-moz-animation: spinner 1s infinite linear !important;
 			-webkit-animation: spinner 1s infinite linear !important;

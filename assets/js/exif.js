@@ -721,7 +721,18 @@
                         exifData[tag] = "ISO " + exifData[tag];
                         break;
                     case "DateTimeOriginal":
-                        exifData[tag] = exifData[tag].replace(/(\d{4}):(\d{2}):(\d{2})/, '$1/$2/$3');
+                        // 将原始字符串分割成日期和时间部分
+                        const [datePart, timePart] = exifData[tag].split(' ');
+
+                        // 将日期部分的分隔符从":"替换为"/"
+                        const formattedDate = datePart.replace(/:/g, '/');
+
+                        // 去掉时间部分的秒数
+                        const formattedTime = timePart.substring(0, 5);
+
+                        // 组合成最终格式
+                        exifData[tag] = `${formattedDate} ${formattedTime}`;
+
                         break;
                     case "ComponentsConfiguration" :
                         exifData[tag] =
