@@ -61,13 +61,21 @@ layout: default
                 </section> -->
 
                 <p class="copyright">
-                    &copy; {{ site.author }}. Design: {{ site.web_design }}
+                    &copy; {{ site.author }}
                 </p>
             </div>
             <div>
                 <section>
                     <h2>Follow me on ...</h2>
                     <ul class="icons">
+                        {% if site.social_urls.jike %}
+                            <li>
+                                <a href="{{ site.social_urls.facebook }}">
+                                    <!-- <span class="label">Facebook</span> -->
+                                    <img class="mediaIcon" src="./assets/icon/jike.png" />
+                                </a>
+                            </li>
+                        {% endif %}
                         {% if site.social_urls.facebook %}
                             <li>
                                 <a href="{{ site.social_urls.facebook }}" class="icon fa-facebook">

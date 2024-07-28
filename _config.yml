@@ -13,14 +13,14 @@ header:
  title: "Shot by "
  subtitle: "Jiaolong"
 footer:
- name: "Hey there, my name is Jiaolong"
+ name: "Hi! My name is Jiaolong"
  bio: "我是一个独立开发者，做了一点解决生活痛点的小app，现在正在学习摄影，希望未来能出一本自己的影集。"
  website: "如果想了解我更多的话，欢迎来访问我的个人主页 <a href=\"https://www.jiaolong.xyz\">jiaolong.xyz</a> "
-# web_design: "AJ"
 # Configure which exif data to display
 # Tag is the actual exif tag, icon is a fontawesome icon. Use JSON notation without line breaks
 exif: '[{"tag": "Model", "icon": "camera-retro"},{"tag": "FocalLength", "icon": "eye"} ,{"tag": "FNumber", "icon": "dot-circle-o"}, {"tag": "ExposureTime", "icon": "clock-o"}, {"tag": "ISOSpeedRatings", "icon": ""}, {"tag": "DateTimeOriginal", "icon": "calendar"}, {"tag": "SubjectLocation", "icon": "location-arro"}]'
-# social_urls:
+social_urls:
+  jike: https://web.okjike.com/u/DB74F1FC-514A-44A6-B8BE-D09E27C873E6
 #   twitter: "https://www.twitter.com/ram__patra"
 #   instagram: "https://www.instagram.com/ram_patra"
 #   dribbble: "https://dribbble.com/rampatra"
