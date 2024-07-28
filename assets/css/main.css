@@ -768,9 +768,14 @@
 			padding-left: 0;
 		}
 
+		ul.icons a {
+			border-bottom: unset;
+		}
+		
 		.mediaIcon {
 			width:30px;
 			border-radius: 7px;
+			filter: brightness(0.8);
 		}
 
 			ul.icons li {
