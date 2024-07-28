@@ -14,7 +14,7 @@ header:
  subtitle: "Jiaolong"
 footer:
  name: "Hi! My name is 「 Jiaolong 」"
- bio: "我是一个独立开发者，做了一点解决生活痛点的小app，现在正在学习摄影，希望未来能出一本自己的影集。</br></br>我目前主要使用的拍摄设备是「Sony A7C2 + 25-50mm f2.8 G"」
+ bio: "我是一个独立开发者，做了一点解决生活痛点的小app，现在正在学习摄影，希望未来能出一本自己的影集。我目前主要使用的拍摄设备是「Sony A7C2 + 25-50mm f2.8 G"」
  website: "如果想了解我更多的话，欢迎来访问我的个人主页 <a href=\"https://www.jiaolong.xyz\">jiaolong.xyz</a> "
 # Configure which exif data to display
 # Tag is the actual exif tag, icon is a fontawesome icon. Use JSON notation without line breaks
