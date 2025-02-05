@@ -118,17 +118,24 @@ layout: default
                         {% if site.social_urls.github %}
                             <li>
                                 <a href="{{ site.social_urls.github }}" class="icon fa-github">
-                                    <span class="label">GitHub</span>
+                                    <img class="mediaIcon" src="./assets/icon/github.png" />
                                 </a>
                             </li>
                         {% endif %}
-                        {% if site.social_urls.linkedin %}
+                        {% if site.social_urls.github %}
+                        <li>
+                            <a href="{{ site.social_urls.github }}" class="icon fa-github">
+                                <img class="mediaIcon" src="./assets/icon/github.png" />
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if site.social_urls.linkedin %}
                             <li>
-                                <a href="{{ site.social_urls.linkedin }}" class="icon fa-linkedin">
-                                    <span class="label">LinkedIn</span>
+                                <a href="{{ site.social_urls.gzh }}" class="icon fa-linkedin">
+                                    <img class="mediaIcon" src="./assets/icon/gzh.png" />
                                 </a>
                             </li>
-                        {% endif %}
+                    {% endif %}
                     </ul>
                 </section>
 
