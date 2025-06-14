@@ -341,7 +341,21 @@
                 }
             }
         
+            // 首先尝试完全匹配
             var value = locationDataCache[removeFileExtension(key)];
+            
+            // 如果没有找到完全匹配，尝试查找前缀匹配
+            if (!value) {
+                const baseKey = removeFileExtension(key).split(/[-_]/)[0]; // 获取基础前缀（不包含序号）
+                // 遍历所有键，查找具有相同前缀的键
+                for (const dictKey in locationDataCache) {
+                    if (dictKey.startsWith(baseKey)) {
+                        value = locationDataCache[dictKey];
+                        break;
+                    }
+                }
+            }
+
             if (value) {
                 return value.replace('-', '・');
             } else {
