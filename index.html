@@ -7,7 +7,7 @@ layout: default
 
     <!-- Header -->
     <header id="header">
-        {% assign jpeg_files = site.static_files | where: "extname", ".jpeg" | sort: "name" %}        {% assign total_static_files = jpeg_files | size %}
+        {% assign jpeg_files = site.static_files | where_exp: "file", "file.extname == '.jpeg' or file.extname == '.jpg' or file.extname == '.JPEG' or file.extname == '.JPG'" | sort: "name" %}        {% assign total_static_files = jpeg_files | size %}
         {% assign total_static_files = total_static_files | divided_by: 2 %}
 
         <h1>「 <span class="icon fa-image"></span> x {{ total_static_files }}」{{ site.header.title }} <strong> {{ site.header.subtitle }} </strong></h1>
