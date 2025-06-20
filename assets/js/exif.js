@@ -733,6 +733,10 @@
                             StringValues.Components[exifData[tag][2]] +
                             StringValues.Components[exifData[tag][3]];
                         break;
+                    case "Model":
+                        if (exifData[tag] === "ILCE-7CM2") {
+                            exifData[tag] = "Sony ILCE-7CM2";
+                        }
                 }
                 tags[tag] = exifData[tag];
             }
