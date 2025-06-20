@@ -734,9 +734,8 @@
                             StringValues.Components[exifData[tag][3]];
                         break;
                     case "Model":
-                        if (exifData[tag] === "ILCE-7CM2") {
-                            exifData[tag] = "Sony ILCE-7CM2";
-                        }
+                        exifData[tag] = exifData[tag].replace("ILCE-7CM2", "Sony ILCE-7CM2");
+                        break;
                 }
                 tags[tag] = exifData[tag];
             }
