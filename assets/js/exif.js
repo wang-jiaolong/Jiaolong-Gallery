@@ -712,7 +712,7 @@
                         exifData[tag] = String.fromCharCode(exifData[tag][0], exifData[tag][1], exifData[tag][2], exifData[tag][3]);
                         break;
                     case "FocalLength":
-                        exifData[tag] = exifData[tag] + "mm";
+                        exifData[tag] = exifData[tag] + "mma";
                         break;
                     case "FNumber":
                         exifData[tag] = "f/" + exifData[tag];
