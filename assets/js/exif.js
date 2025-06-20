@@ -712,7 +712,7 @@
                         exifData[tag] = String.fromCharCode(exifData[tag][0], exifData[tag][1], exifData[tag][2], exifData[tag][3]);
                         break;
                     case "FocalLength":
-                        exifData[tag] = exifData[tag] + "mma";
+                        exifData[tag] = exifData[tag] + "mm";
                         break;
                     case "FNumber":
                         exifData[tag] = "f/" + exifData[tag];
@@ -734,7 +734,7 @@
                             StringValues.Components[exifData[tag][3]];
                         break;
                     case "Model":
-                        exifData[tag] = exifData[tag].replace("ILCE-7CM2", "Sony ILCE-7CM2");
+                        exifData[tag] = "Sony ILCE-7CM2";
                         break;
                 }
                 tags[tag] = exifData[tag];
