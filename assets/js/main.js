@@ -357,7 +357,7 @@
             }
 
             if (value) {
-                return value.replace('-', '・');
+                return value.replace(/-/g, '・');
             } else {
                 return null;
             }
