@@ -354,6 +354,16 @@
                         break;
                     }
                 }
+                
+                // 如果还是没有找到，尝试反向匹配：查找字典中的键是否是当前键的前缀
+                if (!value) {
+                    for (const dictKey in locationDataCache) {
+                        if (baseKey.startsWith(dictKey)) {
+                            value = locationDataCache[dictKey];
+                            break;
+                        }
+                    }
+                }
             }
 
             if (value) {
