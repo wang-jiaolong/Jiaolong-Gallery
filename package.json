@@ -3,6 +3,7 @@
   "version": "4.0.0",
   "description": "A jekyll website for photographer cum developer",
   "main": "npmfile.js",
+  "packageManager": "yarn@4.9.1",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
