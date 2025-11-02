@@ -348,7 +348,7 @@
                         $thumb: $this,
                         $image: $image,
                         $image_img: $image_img,
-                        src: src, // 缩略图URL（用于显示）
+                        src: src,
                         filename: filename,
                         useOSS: useOSS
                     });
@@ -373,7 +373,7 @@
                 var self = this,
                     $image = item.$image,
                     $image_img = item.$image_img,
-                    src = item.src; // 缩略图URL（用于显示）
+                    src = item.src;
 
                 this.loading++;
 
@@ -395,8 +395,10 @@
                     // Hide original img
                     $image_img.hide();
 
-                    // EXIF数据现在只在点击放大查看时才读取（在Poptrox的caption函数中）
-                    // 这样可以提高页面加载速度，特别是对于OSS图片
+                    // Load EXIF data
+                    EXIF.getData($image_img[0], function() {
+                        exifDatas[$image_img.data('name')] = getExifDataMarkup(this);
+                    });
 
                     self.loading--;
                     self.loadNextBatch(); // Try to load next image to maintain batchSize
@@ -446,65 +448,12 @@
             baseZIndex: 20000,
             caption: function ($a) {
                 var $image_img = $a.children('img');
-                var filename = $image_img.data('name');
-                var data = exifDatas[filename];
-                
-                // 如果还没有EXIF数据，现在读取（只在点击放大查看时才读取）
+                var data = exifDatas[$image_img.data('name')];
                 if (data === undefined) {
-                    // 检查是否是OSS图片，如果是则使用完整URL读取EXIF（避免图片处理丢失EXIF）
-                    var useOSS = shouldUseOSS(filename);
-                    var exifSrc;
-                    
-                    if (useOSS) {
-                        // OSS图片使用完整URL（不带处理参数）来读取EXIF
-                        exifSrc = getOSSFullUrl(filename);
-                        var exifImg = new Image();
-                        exifImg.crossOrigin = 'anonymous'; // 设置CORS属性，允许跨域读取
-                        exifImg.onload = function() {
-                            EXIF.getData(exifImg, function() {
-                                exifDatas[filename] = getExifDataMarkup(this);
-                                // 更新弹窗中的caption
-                                var popup = $main[0]._poptrox;
-                                if (popup && popup.$popup) {
-                                    var caption = popup.$popup.find('.poptrox-caption');
-                                    if (caption.length) {
-                                        caption.html('<p>' + exifDatas[filename] + '</p>');
-                                    }
-                                }
-                            });
-                        };
-                        exifImg.onerror = function() {
-                            // 如果CORS失败，尝试从当前图片读取（可能会失败）
-                            EXIF.getData($image_img[0], function() {
-                                exifDatas[filename] = getExifDataMarkup(this);
-                                var popup = $main[0]._poptrox;
-                                if (popup && popup.$popup) {
-                                    var caption = popup.$popup.find('.poptrox-caption');
-                                    if (caption.length) {
-                                        caption.html('<p>' + exifDatas[filename] + '</p>');
-                                    }
-                                }
-                            });
-                        };
-                        exifImg.src = exifSrc;
-                        // 返回空字符串，等待EXIF加载完成后再更新
-                        return ' ';
-                    } else {
-                        // 本地图片直接从img元素读取
-                        EXIF.getData($image_img[0], function () {
-                            data = exifDatas[filename] = getExifDataMarkup(this);
-                            // 更新弹窗中的caption
-                            var popup = $main[0]._poptrox;
-                            if (popup && popup.$popup) {
-                                var caption = popup.$popup.find('.poptrox-caption');
-                                if (caption.length) {
-                                    caption.html('<p>' + data + '</p>');
-                                }
-                            }
-                        });
-                        // 返回空字符串，等待EXIF加载完成后再更新
-                        return ' ';
-                    }
+                    // EXIF data					
+                    EXIF.getData($image_img[0], function () {
+                        data = exifDatas[$image_img.data('name')] = getExifDataMarkup(this);
+                    });
                 }
                 return data !== undefined ? '<p>' + data + '</p>' : ' ';
             },
