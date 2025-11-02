@@ -224,7 +224,7 @@
         // OSS configuration
         var OSS_CONFIG = {
             // baseUrl: 'https://jiaolong.s3.bitiful.net/gallery/',
-            baseUrl: 'https://res.jiaolong.xyz/gallery/20251102.JPG',
+            baseUrl: 'https://res.jiaolong.xyz/gallery/',
             // OSS图片处理参数 - 用于生成缩略图
             // 根据你的OSS服务调整参数格式
             // 常见的格式有：
