@@ -282,30 +282,23 @@
                 var img = new Image();
                 
                 img.onload = function() {
-                    // Get image name for EXIF data
-                    var imgName = $image_img.data('name');
+                    // Set the actual src to trigger browser caching
+                    $image_img.attr('src', src);
                     
-                    // Set background image first (from preloaded img, no additional request)
+                    // Set background image
                     $image.css('background-image', 'url(' + src + ')');
-                    
+
                     // Set background position if specified
                     var x = $image_img.data('position');
                     if (x)
                         $image.css('background-position', x);
-                    
-                    // Now set the actual src on DOM element (browser will use cached version)
-                    // Do this after setting background to ensure display works
-                    $image_img.attr('src', src);
 
                     // Hide original img
                     $image_img.hide();
-                    
-                    // Load EXIF data asynchronously (may trigger XHR but will use browser cache)
-                    // Do this after setting src to ensure image is displayed even if EXIF fails
-                    EXIF.getData(img, function() {
-                        if (imgName) {
-                            exifDatas[imgName] = getExifDataMarkup(this);
-                        }
+
+                    // Load EXIF data
+                    EXIF.getData($image_img[0], function() {
+                        exifDatas[$image_img.data('name')] = getExifDataMarkup(this);
                     });
 
                     self.loading--;
