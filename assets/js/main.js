@@ -220,30 +220,115 @@
         var $main = $('#main'),
             exifDatas = {};
 
-        // Thumbs.
-        $main.children('.thumb').each(function () {
+        // Image loading queue manager - loads images in batches to prevent network congestion
+        // This ensures images load sequentially in groups, preventing all images from competing for bandwidth
+        var ImageLoader = {
+            queue: [],
+            loading: 0,
+            batchSize: 4, // Number of images to load simultaneously (adjust between 3-5 for optimal performance)
+            currentIndex: 0,
 
+            // Initialize: collect all images and store their src in data-src
+            init: function($thumbs) {
+                var self = this;
+                $thumbs.each(function() {
+                    var $this = $(this),
+                        $image = $this.find('.image'),
+                        $image_img = $image.children('img');
+
+                    if ($image.length == 0 || $image_img.length == 0)
+                        return;
+
+                    var src = $image_img.attr('src');
+                    if (!src) return;
+
+                    // Store original src in data attribute and remove from src
+                    $image_img.attr('data-src', src);
+                    $image_img.attr('src', 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg"%3E%3C/svg%3E'); // 1x1 transparent SVG
+
+                    // Add to queue
+                    self.queue.push({
+                        $thumb: $this,
+                        $image: $image,
+                        $image_img: $image_img,
+                        src: src
+                    });
+                });
+
+                // Start loading first batch
+                this.loadNextBatch();
+            },
+
+            // Load next batch of images (maintains batchSize concurrent loads)
+            loadNextBatch: function() {
+                // Keep loading until we have batchSize images loading or queue is empty
+                while (this.loading < this.batchSize && this.currentIndex < this.queue.length) {
+                    var item = this.queue[this.currentIndex];
+                    this.loadImage(item);
+                    this.currentIndex++;
+                }
+            },
+
+            // Load a single image
+            loadImage: function(item) {
+                var self = this,
+                    $image = item.$image,
+                    $image_img = item.$image_img,
+                    src = item.src;
+
+                this.loading++;
+
+                // Create a new image object to preload
+                var img = new Image();
+                
+                img.onload = function() {
+                    // Set the actual src to trigger browser caching
+                    $image_img.attr('src', src);
+                    
+                    // Set background image
+                    $image.css('background-image', 'url(' + src + ')');
+
+                    // Set background position if specified
+                    var x = $image_img.data('position');
+                    if (x)
+                        $image.css('background-position', x);
+
+                    // Hide original img
+                    $image_img.hide();
+
+                    // Load EXIF data
+                    EXIF.getData($image_img[0], function() {
+                        exifDatas[$image_img.data('name')] = getExifDataMarkup(this);
+                    });
+
+                    self.loading--;
+                    self.loadNextBatch(); // Try to load next image to maintain batchSize
+                };
+
+                img.onerror = function() {
+                    // On error, still try to set the src (might be a CORS issue with EXIF)
+                    $image_img.attr('src', src);
+                    $image.css('background-image', 'url(' + src + ')');
+                    var x = $image_img.data('position');
+                    if (x)
+                        $image.css('background-position', x);
+                    $image_img.hide();
+
+                    self.loading--;
+                    self.loadNextBatch(); // Try to load next image to maintain batchSize
+                };
+
+                // Start loading
+                img.src = src;
+            }
+        };
+
+        // Initialize thumbs and set up IE hack
+        var $thumbs = $main.children('.thumb');
+        
+        $thumbs.each(function () {
             var $this = $(this),
-                $image = $this.find('.image'), $image_img = $image.children('img'),
-                x;
-
-            // No image? Bail.
-            if ($image.length == 0)
-                return;
-
-            // Image.
-            // This sets the background of the "image" <span> to the image pointed to by its child
-            // <img> (which is then hidden). Gives us way more flexibility.
-
-            // Set background.
-            $image.css('background-image', 'url(' + $image_img.attr('src') + ')');
-
-            // Set background position.
-            if (x = $image_img.data('position'))
-                $image.css('background-position', x);
-
-            // Hide original img.
-            $image_img.hide();
+                $image = $this.find('.image');
 
             // Hack: IE<11 doesn't support pointer-events, which means clicks to our image never
             // land as they're blocked by the thumbnail's caption overlay gradient. This just forces
@@ -254,15 +339,10 @@
                     .on('click', function () {
                         $image.trigger('click');
                     });
-
-            // EXIF data
-            $image_img[0].addEventListener("load", function () {
-                EXIF.getData($image_img[0], function () {
-                    exifDatas[$image_img.data('name')] = getExifDataMarkup(this);
-                });
-            });
-
         });
+
+        // Initialize image loader
+        ImageLoader.init($thumbs);
 
         // Poptrox.
         $main.poptrox({
