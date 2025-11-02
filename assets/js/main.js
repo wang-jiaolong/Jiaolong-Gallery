@@ -274,21 +274,13 @@
                 return OSS_CONFIG.useOSSForFiles.indexOf(filename) !== -1;
             }
             
-            // 暂时只对以 "20251102" 前缀开头的照片使用OSS
-            var baseName = removeFileExtension(filename);
-            if (baseName.startsWith('20251102')) {
-                return true;
-            }
-            
-            return false;
-            
-            // 以下代码已暂时禁用，如需启用所有locationDic.json中的文件，可以取消注释
-            /*
             // 确保locationDataCache已加载
             ensureLocationDataCache();
             
-            // 检查文件名（去掉扩展名）是否在locationDic.json中存在
+            // 否则，检查文件名（去掉扩展名）是否在locationDic.json中存在
+            // 这是一个简单的启发式方法，你可以根据需要调整
             if (locationDataCache) {
+                var baseName = removeFileExtension(filename);
                 // 检查完全匹配或前缀匹配
                 if (locationDataCache[baseName]) {
                     return true;
@@ -301,7 +293,7 @@
                     }
                 }
             }
-            */
+            return false;
         }
 
         // Image loading queue manager - loads images in batches to prevent network congestion
