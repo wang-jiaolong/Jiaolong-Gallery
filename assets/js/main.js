@@ -405,67 +405,22 @@
         }
         // 缓存 locationDic.json 数据
         let locationDataCache = null;
-        let locationDataLoading = false;
-        let locationDataCallbacks = [];
-
-        // 异步加载 locationDic.json（避免阻塞主线程）
-        function loadLocationData(callback) {
-            if (locationDataCache) {
-                // 数据已加载，立即调用回调
-                if (callback) callback();
-                return;
-            }
-
-            // 如果有回调，加入队列
-            if (callback) {
-                locationDataCallbacks.push(callback);
-            }
-
-            // 如果正在加载，不重复请求
-            if (locationDataLoading) {
-                return;
-            }
-
-            locationDataLoading = true;
-
-            const request = new XMLHttpRequest();
-            request.open('GET', '../images/locationDic.json', true); // true 表示异步请求
-            request.onload = function() {
-                try {
-                    if (request.status === 200) {
-                        locationDataCache = JSON.parse(request.responseText);
-                    } else {
-                        console.error('Network response was not ok', request.status);
-                        locationDataCache = {}; // 设置为空对象避免后续请求
-                    }
-                } catch (error) {
-                    console.error('There was a problem parsing location data:', error);
-                    locationDataCache = {}; // 设置为空对象避免后续请求
-                } finally {
-                    locationDataLoading = false;
-                    // 执行所有等待的回调
-                    locationDataCallbacks.forEach(function(cb) { cb(); });
-                    locationDataCallbacks = [];
-                }
-            };
-            request.onerror = function() {
-                console.error('Failed to load locationDic.json');
-                locationDataCache = {}; // 设置为空对象避免后续请求
-                locationDataLoading = false;
-                // 执行所有等待的回调
-                locationDataCallbacks.forEach(function(cb) { cb(); });
-                locationDataCallbacks = [];
-            };
-            request.send();
-        }
-
-        // 预加载 locationDic.json（页面初始化时）
-        loadLocationData();
 
         function getLocationValue(key) {
-            // 如果数据还未加载，返回null（避免阻塞）
             if (!locationDataCache) {
-                return null;
+                const request = new XMLHttpRequest();
+                request.open('GET', '../images/locationDic.json', false); // false 表示同步请求
+                try {
+                    request.send();
+                    if (request.status === 200) {
+                        const data = JSON.parse(request.responseText);
+                        locationDataCache = data;
+                    } else {
+                        console.error('Network response was not ok', request.status);
+                    }
+                } catch (error) {
+                    console.error('There was a problem with the fetch operation:', error);
+                }
             }
         
             // 首先尝试完全匹配
