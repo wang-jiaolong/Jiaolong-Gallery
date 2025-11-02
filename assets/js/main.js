@@ -218,83 +218,7 @@
 
         // Main.
         var $main = $('#main'),
-            exifDatas = {},
-            locationDataCache = null; // 缓存 locationDic.json 数据
-
-        // OSS configuration
-        var OSS_CONFIG = {
-            baseUrl: 'https://jiaolong.s3.bitiful.net/gallery/',
-            // OSS图片处理参数 - 用于生成缩略图
-            // 根据你的OSS服务调整参数格式
-            // 常见的格式有：
-            // - 阿里云OSS: '?x-oss-process=image/resize,w_512,m_lfit/quality,q_20'
-            // - 腾讯云COS: '?imageMogr2/thumbnail/512x/quality/20'
-            // - 通用格式: '?w=512&h=512&q=20'
-            // q=20 表示质量20%，用于减少缩略图大小
-            // 根据你的OSS服务，选择以下格式之一：
-            // 1. 简单URL参数格式: '?w=512&q=20' (宽度512px，质量20%)
-            // 2. 阿里云OSS格式: '?x-oss-process=image/resize,w_512,m_lfit/quality,q_20'
-            // 3. 腾讯云COS格式: '?imageMogr2/thumbnail/512x/quality/20'
-            thumbParam: '?w=512&q=20', // 宽度512px，质量20%的缩略图
-            // 需要使用OSS的图片文件名列表（不含路径，仅文件名）
-            // 如果文件名在locationDic.json中存在，将自动使用OSS
-            useOSSForFiles: [] // 留空则自动检测locationDic.json中的文件
-        };
-
-        // 获取OSS缩略图URL（小尺寸）
-        function getOSSThumbUrl(filename) {
-            return OSS_CONFIG.baseUrl + filename + OSS_CONFIG.thumbParam;
-        }
-
-        // 获取OSS完整图片URL
-        function getOSSFullUrl(filename) {
-            return OSS_CONFIG.baseUrl + filename;
-        }
-
-        // 确保locationDataCache已加载
-        function ensureLocationDataCache() {
-            if (!locationDataCache) {
-                try {
-                    const request = new XMLHttpRequest();
-                    request.open('GET', '../images/locationDic.json', false); // 同步请求
-                    request.send();
-                    if (request.status === 200) {
-                        locationDataCache = JSON.parse(request.responseText);
-                    }
-                } catch (error) {
-                    console.error('加载locationDic.json失败:', error);
-                }
-            }
-        }
-
-        // 检查图片是否应该使用OSS
-        function shouldUseOSS(filename) {
-            // 如果配置了useOSSForFiles列表，检查文件名是否在列表中
-            if (OSS_CONFIG.useOSSForFiles.length > 0) {
-                return OSS_CONFIG.useOSSForFiles.indexOf(filename) !== -1;
-            }
-            
-            // 确保locationDataCache已加载
-            ensureLocationDataCache();
-            
-            // 否则，检查文件名（去掉扩展名）是否在locationDic.json中存在
-            // 这是一个简单的启发式方法，你可以根据需要调整
-            if (locationDataCache) {
-                var baseName = removeFileExtension(filename);
-                // 检查完全匹配或前缀匹配
-                if (locationDataCache[baseName]) {
-                    return true;
-                }
-                // 检查前缀匹配
-                var prefix = baseName.split(/[-_]/)[0];
-                for (var key in locationDataCache) {
-                    if (key.startsWith(prefix) || baseName.startsWith(key)) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
+            exifDatas = {};
 
         // Image loading queue manager - loads images in batches to prevent network congestion
         // This ensures images load sequentially in groups, preventing all images from competing for bandwidth
@@ -318,19 +242,6 @@
                     var src = $image_img.attr('src');
                     if (!src) return;
 
-                    // 检查是否应该使用OSS
-                    var filename = $image_img.data('name') || src.split('/').pop();
-                    var useOSS = shouldUseOSS(filename);
-                    
-                    if (useOSS) {
-                        // 使用OSS URL
-                        // 缩略图使用小尺寸
-                        src = getOSSThumbUrl(filename);
-                        // 大图链接使用完整尺寸
-                        var fullUrl = getOSSFullUrl(filename);
-                        $image.attr('href', fullUrl);
-                    }
-
                     // Store original src in data attribute and remove from src
                     $image_img.attr('data-src', src);
                     $image_img.attr('src', 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg"%3E%3C/svg%3E'); // 1x1 transparent SVG
@@ -340,9 +251,7 @@
                         $thumb: $this,
                         $image: $image,
                         $image_img: $image_img,
-                        src: src,
-                        filename: filename,
-                        useOSS: useOSS
+                        src: src
                     });
                 });
 
@@ -494,6 +403,8 @@
                 return filename;
             }
         }
+        // 缓存 locationDic.json 数据
+        let locationDataCache = null;
 
         function getLocationValue(key) {
             if (!locationDataCache) {
