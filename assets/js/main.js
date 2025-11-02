@@ -447,98 +447,64 @@
             caption: function ($a) {
                 var $image_img = $a.children('img');
                 var filename = $image_img.data('name');
-                
-                if (!filename) return ' ';
-                
                 var data = exifDatas[filename];
                 
                 // 如果还没有EXIF数据，现在读取（只在点击放大查看时才读取）
                 if (data === undefined) {
                     // 检查是否是OSS图片，如果是则使用完整URL读取EXIF（避免图片处理丢失EXIF）
                     var useOSS = shouldUseOSS(filename);
-                    
-                    // 获取大图URL（从<a>标签的href属性）
-                    var fullImageUrl = $a.attr('href');
+                    var exifSrc;
                     
                     if (useOSS) {
                         // OSS图片使用完整URL（不带处理参数）来读取EXIF
-                        var exifSrc = getOSSFullUrl(filename);
+                        exifSrc = getOSSFullUrl(filename);
                         var exifImg = new Image();
-                        exifImg.crossOrigin = 'anonymous';
+                        exifImg.crossOrigin = 'anonymous'; // 设置CORS属性，允许跨域读取
                         exifImg.onload = function() {
-                            try {
-                                EXIF.getData(exifImg, function() {
-                                    var exifData = getExifDataMarkup(this);
-                                    if (exifData) {
-                                        exifDatas[filename] = exifData;
-                                        // 延迟更新caption，确保popup已经创建
-                                        setTimeout(function() {
-                                            var popup = $main[0]._poptrox;
-                                            if (popup && popup && popup.$popup) {
-                                                var caption = popup.$popup.find('.caption');
-                                                if (caption.length) {
-                                                    caption.html('<p>' + exifData + '</p>');
-                                                }
-                                            }
-                                        }, 200);
-                                    }
-                                });
-                            } catch(e) {
-                                console.error('EXIF读取错误:', e);
-                            }
-                        };
-                        exifImg.onerror = function() {
-                            console.warn('OSS EXIF读取失败，可能是CORS问题');
-                        };
-                        exifImg.src = exifSrc;
-                    } else {
-                        // 本地图片：等弹窗中的大图加载完成后再读取EXIF
-                        setTimeout(function() {
-                            var popup = $main[0]._poptrox;
-                            if (popup && popup.$popup) {
-                                // 从弹窗中找到实际显示的大图
-                                var popupImg = popup.$popup.find('img');
-                                if (popupImg.length > 0 && popupImg[0].complete) {
-                                    try {
-                                        EXIF.getData(popupImg[0], function () {
-                                            var exifData = getExifDataMarkup(this);
-                                            if (exifData) {
-                                                exifDatas[filename] = exifData;
-                                                var caption = popup.$popup.find('.caption');
-                                                if (caption.length) {
-                                                    caption.html('<p>' + exifData + '</p>');
-                                                }
-                                            }
-                                        });
-                                    } catch(e) {
-                                        console.error('EXIF读取错误:', e);
-                                    }
-                                } else {
-                                    // 如果图片还没加载完成，等待加载
-                                    if (popupImg.length > 0) {
-                                        popupImg.on('load', function() {
-                                            try {
-                                                EXIF.getData(this, function () {
-                                                    var exifData = getExifDataMarkup(this);
-                                                    if (exifData) {
-                                                        exifDatas[filename] = exifData;
-                                                        var caption = popup.$popup.find('.caption');
-                                                        if (caption.length) {
-                                                            caption.html('<p>' + exifData + '</p>');
-                                                        }
-                                                    }
-                                                });
-                                            } catch(e) {
-                                                console.error('EXIF读取错误:', e);
-                                            }
-                                        });
+                            EXIF.getData(exifImg, function() {
+                                exifDatas[filename] = getExifDataMarkup(this);
+                                // 更新弹窗中的caption
+                                var popup = $main[0]._poptrox;
+                                if (popup && popup.$popup) {
+                                    var caption = popup.$popup.find('.poptrox-caption');
+                                    if (caption.length) {
+                                        caption.html('<p>' + exifDatas[filename] + '</p>');
                                     }
                                 }
+                            });
+                        };
+                        exifImg.onerror = function() {
+                            // 如果CORS失败，尝试从当前图片读取（可能会失败）
+                            EXIF.getData($image_img[0], function() {
+                                exifDatas[filename] = getExifDataMarkup(this);
+                                var popup = $main[0]._poptrox;
+                                if (popup && popup.$popup) {
+                                    var caption = popup.$popup.find('.poptrox-caption');
+                                    if (caption.length) {
+                                        caption.html('<p>' + exifDatas[filename] + '</p>');
+                                    }
+                                }
+                            });
+                        };
+                        exifImg.src = exifSrc;
+                        // 返回空字符串，等待EXIF加载完成后再更新
+                        return ' ';
+                    } else {
+                        // 本地图片直接从img元素读取
+                        EXIF.getData($image_img[0], function () {
+                            data = exifDatas[filename] = getExifDataMarkup(this);
+                            // 更新弹窗中的caption
+                            var popup = $main[0]._poptrox;
+                            if (popup && popup.$popup) {
+                                var caption = popup.$popup.find('.poptrox-caption');
+                                if (caption.length) {
+                                    caption.html('<p>' + data + '</p>');
+                                }
                             }
-                        }, 300);
+                        });
+                        // 返回空字符串，等待EXIF加载完成后再更新
+                        return ' ';
                     }
-                    // 返回空字符串，等待EXIF加载完成后再更新
-                    return ' ';
                 }
                 return data !== undefined ? '<p>' + data + '</p>' : ' ';
             },
