@@ -599,7 +599,6 @@
                     switch (e.keyCode) {
 
                         case 37:
-                        case 32:
 
                             if (settings.usePopupNav) {
 
@@ -610,6 +609,7 @@
 
                             break;
 
+                        case 32:
                         case 39:
 
                             if (settings.usePopupNav) {
