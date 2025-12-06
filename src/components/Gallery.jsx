@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef, useMemo, useCallback, memo } from 'react'
-import { images, getImageUrl } from '../data/images'
+import { images, getImageUrl, getThumbnailUrl } from '../data/images'
 import './Gallery.css'
 
 const GalleryItemComponent = ({ image, index, onImageClick }) => {
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
+  const [useOriginal, setUseOriginal] = useState(false) // 如果缩略图加载失败，使用原图
   // 预加载前18张图片（约6行，每行3张）
   const [shouldLoad, setShouldLoad] = useState(index < 18)
   const imgRef = useRef(null)
@@ -67,8 +68,14 @@ const GalleryItemComponent = ({ image, index, onImageClick }) => {
   }, [])
 
   const handleError = useCallback(() => {
-    setImageError(true)
-  }, [])
+    // 如果缩略图加载失败，尝试使用原图
+    if (!useOriginal) {
+      setUseOriginal(true)
+      setImageError(false) // 重置错误状态，准备加载原图
+    } else {
+      setImageError(true) // 原图也加载失败
+    }
+  }, [useOriginal])
 
   const handleClick = useCallback(() => {
     onImageClick(image)
@@ -89,7 +96,7 @@ const GalleryItemComponent = ({ image, index, onImageClick }) => {
         {shouldLoad && (
           <img
             ref={imgRef}
-            src={getImageUrl(image.url)}
+            src={useOriginal ? getImageUrl(image.url) : getThumbnailUrl(image.url)}
             alt={image.title}
             loading={index < 18 ? "eager" : "lazy"}
             onLoad={handleLoad}

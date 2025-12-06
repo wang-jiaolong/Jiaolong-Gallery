@@ -182,6 +182,24 @@
   object-fit: contain;
 }
 
+.modal-thumbnail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
+}
+
+.modal-full-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 2;
+}
+
 .modal-info {
   position: absolute;
   bottom: 0;

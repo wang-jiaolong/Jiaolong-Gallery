@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { getImageUrl } from '../data/images'
+import { getImageUrl, getThumbnailUrl } from '../data/images'
 import './ImageModal.css'
 
 function ImageModal({ image, onClose, onNext, onPrev }) {
   const [infoVisible, setInfoVisible] = useState(true)
+  const [fullImageLoaded, setFullImageLoaded] = useState(false)
+
+  // 当图片切换时，重置加载状态
+  useEffect(() => {
+    setFullImageLoaded(false)
+  }, [image.url])
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -53,14 +59,32 @@ function ImageModal({ image, onClose, onNext, onPrev }) {
             title="下一张 (→)"
             aria-label="下一张"
           />
+          {/* 缩略图（作为占位符，快速显示） */}
+          <img 
+            src={getThumbnailUrl(image.url)} 
+            alt={image.title}
+            className="modal-thumbnail"
+            style={{ 
+              opacity: fullImageLoaded ? 0 : 1,
+              transition: 'opacity 0.3s ease',
+              filter: fullImageLoaded ? 'blur(0)' : 'blur(4px)',
+            }}
+          />
+          {/* 原图（点击后加载） */}
           <img 
             src={getImageUrl(image.url)} 
             alt={image.title}
+            className="modal-full-image"
+            onLoad={() => setFullImageLoaded(true)}
             onClick={(e) => {
               e.stopPropagation()
               setInfoVisible(!infoVisible)
             }}
-            style={{ cursor: 'pointer' }}
+            style={{ 
+              cursor: 'pointer',
+              opacity: fullImageLoaded ? 1 : 0,
+              transition: 'opacity 0.5s ease',
+            }}
           />
           <div className={`modal-info ${infoVisible ? 'visible' : 'hidden'}`}>
             <h2 className="modal-title">
