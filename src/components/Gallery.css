@@ -1,0 +1,166 @@
+.gallery-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--column-count, 3), 1fr);
+  gap: 24px;
+  padding-bottom: 40px;
+}
+
+.gallery-item {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  width: 100%;
+}
+
+.gallery-item:hover {
+  transform: translateY(-4px);
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #1a1a1a;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.4s ease, transform 0.5s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  will-change: opacity;
+}
+
+.image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.image-skeleton {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 0%,
+    #252525 50%,
+    #1a1a1a 100%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.gallery-item:hover .image-wrapper img {
+  transform: scale(1.05);
+}
+
+.image-favorite-star {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 4;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  animation: starPulse 2s ease-in-out infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center center;
+}
+
+.image-favorite-star svg {
+  width: 22px;
+  height: 22px;
+}
+
+@keyframes starPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.9;
+  }
+}
+
+.gallery-item:hover .image-favorite-star {
+  animation: none;
+  transform: scale(1) translateZ(0);
+  opacity: 1;
+}
+
+.image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  padding: 24px 16px 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: white;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.gallery-item:hover .image-overlay {
+  opacity: 1;
+}
+
+.image-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.image-location {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .gallery-grid {
+    gap: 16px;
+  }
+  
+  .image-overlay {
+    display: none; /* 移动端隐藏标题和位置信息 */
+  }
+  
+  .gallery-item:hover .image-wrapper img {
+    transform: none; /* 移动端禁用hover缩放效果 */
+  }
+}

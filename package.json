@@ -1,38 +1,22 @@
 {
-  "name": "photography",
-  "version": "4.0.0",
-  "description": "A jekyll website for photographer cum developer",
-  "main": "npmfile.js",
-  "packageManager": "yarn@4.9.1",
+  "name": "gallery",
+  "version": "1.0.0",
+  "description": "简约风格的个人摄影集",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rampatra/photography.git"
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
-  "keywords": [
-    "photography",
-    "jekyll",
-    "website",
-    "template",
-    "website template",
-    "portfolio",
-    "portfolio website"
-  ],
-  "author": "Ram Patra",
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/rampatra/photography/issues"
-  },
-  "homepage": "https://github.com/rampatra/photography#readme",
   "devDependencies": {
-    "del": "^4.1.1",
-    "gulp": "^4.0.2",
-    "gulp-image-resize": "^0.13.1",
-    "gulp-rename": "^1.4.0",
-    "gulp-sass": "^5.1.0",
-    "gulp-uglify": "^3.0.2",
-    "sass": "^1.85.1"
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.0.8"
   }
 }
+
