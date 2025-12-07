@@ -37,6 +37,19 @@ const Header = memo(({ onFeaturedToggle, isFeatured }) => {
 
 Header.displayName = 'Header'
 
+// Footer组件
+const Footer = memo(() => {
+  return (
+    <footer className="footer">
+      <div className="footer-content">
+        <p className="footer-text">© 2025 本网站所有照片均为原创作品，未经授权禁止转载</p>
+      </div>
+    </footer>
+  )
+})
+
+Footer.displayName = 'Footer'
+
 function App() {
   const [selectedImage, setSelectedImage] = useState(null)
   const [isFeatured, setIsFeatured] = useState(false)
@@ -87,7 +100,9 @@ function App() {
   return (
     <div className="app">
       <Header onFeaturedToggle={handleFeaturedToggle} isFeatured={isFeatured} />
-      <Gallery onImageClick={handleImageClick} isFeatured={isFeatured} />
+      <div className="app-content">
+        <Gallery onImageClick={handleImageClick} isFeatured={isFeatured} />
+      </div>
       {selectedImage && (
         <ImageModal
           image={selectedImage}
@@ -96,6 +111,7 @@ function App() {
           onPrev={handlePrev}
         />
       )}
+      <Footer />
     </div>
   )
 }

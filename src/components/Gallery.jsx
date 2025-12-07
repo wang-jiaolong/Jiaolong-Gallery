@@ -143,7 +143,7 @@ const Gallery = memo(({ onImageClick, isFeatured }) => {
       if (width < 768) {
         setColumnCount(1) // 移动端单列显示
       } else if (width < 1024) {
-        setColumnCount(3)
+        setColumnCount(2)
       } else {
         setColumnCount(3)
       }

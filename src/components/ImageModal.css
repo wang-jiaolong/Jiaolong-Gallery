@@ -265,16 +265,42 @@
 }
 
 .modal-location {
-  color: #b0b0b0;
+  color: #888;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .modal-separator {
-  color: #888;
+  color: #656565;
+  font-size: 0.9rem;
+  display: inline-flex;
+  margin: 0 6px;
 }
 
 .modal-date {
   color: #888;
   font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.modal-camera {
+  color: #888;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.location-icon,
+.date-icon,
+.camera-icon {
+  flex-shrink: 0;
+  vertical-align: middle;
+  color: inherit;
 }
 
 .modal-description {

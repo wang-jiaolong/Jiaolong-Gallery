@@ -1,0 +1,251 @@
+// 原始图片数据
+// 你可以将这里的 URL 替换为你自己的图片链接
+// 或者将图片放在 public 文件夹中，使用相对路径
+
+import { CameraBrand } from './cameraBrand.js'
+
+export const rawImages = [
+  {
+    title: '睡在山顶的小橘猫',
+    url: '20230523.jpeg',
+    location: '焦作-云台山',
+    favorite: true,
+    description: '小猫能有什么烦恼呢？',
+    camera: CameraBrand.CANON,
+  },
+  {
+    url: '2024042_7.jpeg',
+    location: '北京-798艺术区',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20240420_2.jpeg',
+    location: '北京-798艺术区',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20240420_4.jpeg',
+    title: '贩卖快乐',
+    location: '北京-798艺术区',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20240420_6.jpeg',
+    location: '北京-798艺术区',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20240501.jpeg',
+    title: '偶遇的青橙时刻',
+    location: '北京',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20240603.jpeg',
+    title: '大理洱海',
+    location: '云南·大理',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20240605.jpeg',
+    title: '丽江古城',
+    location: '云南·丽江',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20240724.jpeg',
+    title: '小熊猫',
+    location: '北京·野生动物园',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20241024_1.jpeg',
+    title: '外白渡桥',
+    location: '上海',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20241024_2.jpeg',
+    title: '外白渡桥',
+    location: '上海',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20241024_3.jpeg',
+    title: '外白渡桥',
+    location: '上海',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20241024_4.jpeg',
+    title: '外滩夜景',
+    location: '上海·外滩',
+    favorite: true,
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20241025_1.jpeg',
+    title: '太湖夜景',
+    location: '苏州·太湖',
+    camera: CameraBrand.SONY,
+  },
+  {
+    title: '打铁花',
+    url: '20241025_2.jpeg',
+    location: '苏州·太湖',
+    favorite: true,
+    camera: CameraBrand.SONY,
+  },
+  {
+    title: '烟花',
+    url: '20241025_3.jpeg',
+    location: '苏州·太湖',
+    camera: CameraBrand.SONY,
+  },
+  {
+    title: '金海湖',
+    url: '20241103_1.jpeg',
+    location: '北京·金海湖',
+    camera: CameraBrand.SONY,
+  },
+  {
+    title: '金海湖',
+    url: '20241103_2.jpeg',
+    location: '北京·金海湖',
+    camera: CameraBrand.SONY,
+  },
+  {
+    title: '故宫夜景',
+    url: '20241123.jpeg',
+    location: '北京·故宫',
+    favorite: true,
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20250301_1.jpeg',
+    location: '北京·朗园 Station',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20250301_2.jpeg',
+    location: '北京·朗园 Station',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20250301.jpeg',
+    location: '北京·朗园 Station',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20250301.JPG',
+    title: '咖啡续命',
+    location: '北京·朗园 Station',
+  },
+  {
+    url: '20250405_1.jpeg',
+    title: '海棠花溪',
+    location: '北京·望京南',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20250405_2.jpeg',
+    title: '海棠花溪',
+    location: '北京·望京南',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20250613_2.JPG',
+    title: '香山公园',
+    location: '北京·香山公园',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20250613_3.JPG',
+    title: '香山公园',
+    location: '北京·香山公园',
+    camera: CameraBrand.SONY,
+},
+  {
+    url: '20250613.JPG',
+    title: '香山公园',
+    location: '北京·香山公园',
+    camera: CameraBrand.SONY,
+},
+  {
+    url: '20250718_1.JPG',
+    title: '城市夜景',
+    location: '天津',
+    camera: CameraBrand.SONY,
+},
+  {
+    url: '20250718_2.JPG',
+    title: '世纪钟',
+    location: '天津',
+    camera: CameraBrand.SONY,
+},
+  {
+    title: '城市夜景',
+    url: '20250718.jpg',
+    location: '天津',
+    camera: CameraBrand.SONY,
+},
+  {
+    title: '天津之眼下的夜晚',
+    url: '20250719.JPG',
+    location: '天津',
+    camera: CameraBrand.SONY,
+  },
+  {
+    title: '水母',
+    url: '20250720.JPG',
+    location: '天津·极地海洋公园',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20251102_1.JPG',
+    title: '枯木',
+    location: '上海·共青国家森林公园',
+    camera: CameraBrand.SONY,
+    favorite: true,
+  },
+  {
+    title: '静谧的白',
+    url: '20251102_2.JPG',
+    location: '上海·共青国家森林公园',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20251102_3.JPG',
+    title: '落叶',
+    location: '上海·共青国家森林公园',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20251102_4.JPG',
+    title: '码头的蓝调时刻',
+    location: '上海·共青国家森林公园',
+    favorite: true,
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20251102.jpeg',
+    title: '小火车来喽～',
+    location: '上海·共青国家森林公园',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20251102.JPG',
+    title: '阳光与森林',
+    location: '上海·共青国家森林公园',
+    camera: CameraBrand.SONY,
+  },
+  {
+    url: '20251115.JPG',
+    title: '上海长江大桥',
+    location: '上海',
+    description: '《悲伤逆流成河》取景地，上海长江大桥',
+    favorite: true,
+    camera: CameraBrand.SONY,
+  },
+]
+
